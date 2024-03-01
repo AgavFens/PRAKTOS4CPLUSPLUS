@@ -1,69 +1,83 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <algorithm>
 #include <random>
 
+namespace Praktos4 {
+    using namespace std;
 
-std::string reverse(const std::string& word) {
-    std::string reversed_word = word;
-    std::reverse(reversed_word.begin(), reversed_word.end());
-    return reversed_word;
-}
-
-std::string removeVowels(const std::string& word) {
-    std::string result = "";
-    for (char ch : word) {
-        if (tolower(ch) != 'a' && tolower(ch) != 'e' && tolower(ch) != 'i' && tolower(ch) != 'o' && tolower(ch) != 'u')
-            result += ch;
+    string reverse(const string& word) {
+        string reversed_word = word;
+        reverse(reversed_word.begin(), reversed_word.end());
+        return reversed_word;
     }
-    return result;
-}
 
-std::string removeConsonants(const std::string& word) {
-    std::string result = "";
-    for (char ch : word) {
-        if (tolower(ch) == 'a' || tolower(ch) == 'e' || tolower(ch) == 'i' || tolower(ch) == 'o' || tolower(ch) == 'u')
-            result += ch;
+    string removeVowels(const string& word) {
+        string result;
+        for (char c : word) {
+            if (c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u' &&
+                c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U') {
+                result += c;
+            }
+        }
+        return result;
     }
-    return result;
-}
 
-std::string shuffle(const std::string& word) {
-    std::string shuffled_word = word;
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(shuffled_word.begin(), shuffled_word.end(), g);
-    return shuffled_word;
+    string removeConsonants(const string& word) {
+        string result;
+        for (char c : word) {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
+                c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
+                result += c;
+            }
+        }
+        return result;
+    }
+
+    string shuffle(const string& word) {
+        random_shuffle(word.begin(), word.end());
+    }
 }
 
 int main() {
     setlocale(LC_ALL, "RUS");
-    std::string word;
-    std::cout << "Введите слово: ";
-    std::cin >> word;
+    using namespace std;
+    string word;
+    cout << "Введите слова: ";
+    cin >> word;
 
-    int choice;
-    std::cout << "Выберите действие:\n";
-    std::cout << "1. Слово выводится задом наперед.\n";
-    std::cout << "2. Вывести слово без гласных.\n";
-    std::cout << "3. Вывести слово без согласных.\n";
-    std::cout << "4. Рандомно раскидывать буквы заданного слова.\n";
-    std::cin >> choice;
+    int choice = 0;
+    while (choice != 5) {
+        cout << "\nМеню:\n";
+        cout << "1. Реверснуть слова\n";
+        cout << "2. Вывести слова без гласных\n";
+        cout << "3. Вывести слова без согласных\n";
+        cout << "4. Слова будут в перемешку\n";
+        cout << "5. Выход\n";
+        cout << "Выбери че хочешь: ";
+        cin >> choice;
 
-    switch (choice) {
-    case 1:
-        std::cout << "Результат: " << reverse(word) << std::endl;
-        break;
-    case 2:
-        std::cout << "Результат: " << removeVowels(word) << std::endl;
-        break;
-    case 3:
-        std::cout << "Результат: " << removeConsonants(word) << std::endl;
-        break;
-    case 4:
-        std::cout << "Результат: " << shuffle(word) << std::endl;
-        break;
-    default:
-        std::cout << "Неверный выбор.\n";
+        string result;
+        if (choice == 1) {
+            result = Praktos4::reverse(word);
+        }
+        else if (choice == 2) {
+            result = Praktos4::removeVowels(word);
+        }
+        else if (choice == 3) {
+            result = Praktos4::removeConsonants(word);
+        }
+        else if (choice == 4) {
+            result = Praktos4::shuffle(word);
+        }
+        else if (choice == 5) {
+            cout << "Выход...\n";
+            break;
+        }
+        else {
+            cout << "Неправильный выбор, выбери че дано было!!!.\n";
+            continue;
+        }
+        cout << "Результат: " << result << "\n";
     }
 }
